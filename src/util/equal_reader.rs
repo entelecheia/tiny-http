@@ -189,10 +189,7 @@ mod tests {
 
         impl Read for FailingReader {
             fn read(&mut self, _buf: &mut [u8]) -> IoResult<usize> {
-                Err(::std::io::Error::new(
-                    ::std::io::ErrorKind::Other,
-                    "boom",
-                ))
+                Err(::std::io::Error::new(::std::io::ErrorKind::Other, "boom"))
             }
         }
 
@@ -223,7 +220,8 @@ mod tests {
         drop(equal_reader);
 
         assert!(
-            rx.recv_timeout(::std::time::Duration::from_millis(50)).is_err(),
+            rx.recv_timeout(::std::time::Duration::from_millis(50))
+                .is_err(),
             "a full drain must not send on last_read_signal"
         );
     }
