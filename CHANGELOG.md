@@ -1,5 +1,10 @@
 # Changes
 
+## Unreleased
+* Fixed a potential process abort (SIGABRT) when dropping a request body whose declared size is
+  much larger than the actual data: the `EqualReader` drain loop now uses a fixed 8 KiB buffer
+  instead of allocating the full remaining size.
+
 ## 0.12.0
 * Bumped the minimum compiler version tested by CI to 1.56 - this is necessary due to an increasing number of dependencies
   introducing Cargo manifest features only supported on newer versions of Rust.
